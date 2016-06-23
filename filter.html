@@ -1,0 +1,103 @@
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	div.pool{
+		position:absolute;
+		width:300px;
+		top:0px;
+		bottom:0px;
+		left:0px;
+		background:#FFF;
+		overflow-y:scroll;
+	}
+	div.page{
+		position:absolute;
+		top:0px;
+		bottom:0px;
+		left:300px;
+		right:0px;
+		margin-top:5px;
+		margin-right:5px;
+		background:#FFF;
+		box-shadow: 0px 0px 10px #EEE;
+		border-radius: 5px;
+		padding:5px;
+	}
+	div.character{
+		background:#FFF;
+		margin-top:5px;
+		margin-left:5px;
+		margin-right:15px;
+		padding:5px;
+		border-radius: 5px;
+		box-shadow: 0px 0px 10px #EEE;
+	}
+	a,h2{
+		font-family:Calibri;
+	}
+	a.selector{
+		font-weight:Bold;
+	}
+	a.selSub{
+		color:#888;
+	}
+	h2{
+		margin-left:25px;
+	}
+	</style>
+	<link rel="stylesheet" href="perfect-scrollbar.min.css" />
+	<script src="js/jquery-2.2.0.min.js"></script>
+	<script src="js/perfect-scrollbar.jquery.min.js"></script>
+</head>
+<body>
+<div class="pool">
+</div>
+<div class="page">
+</div>
+</body>
+<script>
+characterList = [{"name":"Elimar the Black", "race":"Human", 		"occupation":"Bounty Hunter"},
+{"name":"Refur Cod-Biter", "race":"Human", 							"occupation":"Hirthman"},
+{"name":"Haddi the Old", "race":"Human", 							"occupation":"Godi of Gol"},
+{"name":"Eamon Mcmillan", "race":"Dwarf, Chalk", 					"occupation":"Godi of Gol"},
+{"name":"Sirus Karlpels", "race":"Asbj&oslash;rn, Brown", 			"occupation":"Sell Sword"},
+{"name":"Val&#254;&oacute;r Wolfjoint", "race":"Human", 			"occupation":"Jarl Warrior"},
+{"name":"Bergj&oacute;n Oxen-Might", "race":"Human", 				"occupation":"Jarl Warrior"},
+{"name":"Herstein Bluetooth", "race":"Human", 						"occupation":"Jarl Warrior"},
+{"name":"Osten Njordsson the Freeman", "race":"Dwarf, Fell", 		"occupation":"King"},
+{"name":"Vigar Aethorin", "race":"Dwarf, Fell", 					"occupation":"Head Shaman of Mannik"},
+{"name":"Odvin Kaldathrad", "race":"Dwarf, Fell", 					"occupation":"Head Shaman of Laurel"},
+{"name":"Brynvald Bjorinkal/Goldtooth", "race":"Dwarf, Fell", 		"occupation":"Head Shaman of Wuruhi"},
+{"name":"Narvid Lokinal", "race":"Dwarf, Fell", 					"occupation":"Hallen Host"},
+{"name":"Edlan Geasjorm", "race":"Dwarf, Fell", 					"occupation":"Goldsmith Master"},
+{"name":"Mr. Izzard", "race":"Human", 								"occupation":"Everyman"},
+{"name":"Orwel Clease", "race":"Human", 							"occupation":"Commander"},
+{"name":"Stefan Truesteer Aethorin", "race":"Dwarf, Fell", 			"occupation":"Woodsman"},
+{"name":"Hj&aacute;lprekur Moon", "race":"Human", 					"occupation":""},
+{"name":"Sturri the Squint-Eyed", "race":"Human", 					"occupation":""},
+{"name":"Hrifla the dwarf", "race":"Human", 						"occupation":""},
+{"name":"Moli Karlpels", "race":"Asbj&oslash;rn, Brown", 			"occupation":"Sell Sword"},
+{"name":"Astvar Solpels", "race":"Asbj&oslash;rn, Black", 			"occupation":"Zealot"}]
+
+pC ="";
+$('div.pool').perfectScrollbar();
+$.each(characterList,function(i,object){
+	pC += '<div id="'+i+'"class="character">';
+	pC += '<a class="selector">'+object.name+'</a><br>';
+	pC += '<a class="selSub">'+object.race+' - </a>';
+	pC += '<a class="selSub">'+object.occupation+'</a><br>';
+	pC += '</div>';
+});
+$('div.pool').html(pC);
+$('div.character').on( "click", function(){
+	index = $(this).attr('id');
+	pageContent = '<h2>'+characterList[index].name;+'</h2>'
+	
+	if(pageContent ==undefined){
+		pageContent = "";
+	}
+	$('div.page').html(pageContent);
+});
+</script>
+</html>
