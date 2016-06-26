@@ -25,7 +25,6 @@
 		padding:5px;
 	}
 	div.character{
-		background:#FFF;
 		margin-top:5px;
 		margin-left:5px;
 		margin-right:15px;
@@ -33,17 +32,56 @@
 		border-radius: 5px;
 		box-shadow: 0px 0px 10px #EEE;
 	}
-	a,h2{
+	[highlight="0"]{
+		background:#FFF;
+		opacity:0.2;
+	}
+	[highlight="2"]{
+		background:#000;
+		color:FFF;
+	}
+	[type="ally"]{
+		color: #689f38;
+		background:#dcedc8;
+	}
+	[type="enemy"]{
+		color: #f44336;
+		background:#ffcdd2;
+	}
+	[type="boss"]{
+		color: #9c27b0;
+		background:#e1bee7;
+	}
+	[type="uboss"]{
+		color: #673ab7;
+		background:#d1c4e9;
+	}
+	[type="minion"]{
+		color: #0097a7;
+		background:#b2ebf2;
+	}
+	[type="rmin"]{
+		color:  #009688;
+		background:#b2dfdb;
+	}
+	[type="rboss"]{
+		color: #e91e63;
+		background:#f8bbd0;
+	}
+	a,h2,h3{
 		font-family:Calibri;
 	}
 	a.selector{
 		font-weight:Bold;
 	}
 	a.selSub{
-		color:#888;
+		opacity:0.75;
 	}
-	h2{
+	h2,h3{
 		margin-left:25px;
+	}
+	h3{
+		font-weight:normal;
 	}
 	</style>
 	<link rel="stylesheet" href="perfect-scrollbar.min.css" />
@@ -57,28 +95,45 @@
 </div>
 </body>
 <script>
-characterList = [{"name":"Elimar the Black", "race":"Human", 		"occupation":"Bounty Hunter"},
-{"name":"Refur Cod-Biter", "race":"Human", 							"occupation":"Hirthman"},
-{"name":"Haddi the Old", "race":"Human", 							"occupation":"Godi of Gol"},
-{"name":"Eamon Mcmillan", "race":"Dwarf, Chalk", 					"occupation":"Godi of Gol"},
-{"name":"Sirus Karlpels", "race":"Asbj&oslash;rn, Brown", 			"occupation":"Sell Sword"},
-{"name":"Val&#254;&oacute;r Wolfjoint", "race":"Human", 			"occupation":"Jarl Warrior"},
-{"name":"Bergj&oacute;n Oxen-Might", "race":"Human", 				"occupation":"Jarl Warrior"},
-{"name":"Herstein Bluetooth", "race":"Human", 						"occupation":"Jarl Warrior"},
-{"name":"Osten Njordsson the Freeman", "race":"Dwarf, Fell", 		"occupation":"King"},
-{"name":"Vigar Aethorin", "race":"Dwarf, Fell", 					"occupation":"Head Shaman of Mannik"},
-{"name":"Odvin Kaldathrad", "race":"Dwarf, Fell", 					"occupation":"Head Shaman of Laurel"},
-{"name":"Brynvald Bjorinkal/Goldtooth", "race":"Dwarf, Fell", 		"occupation":"Head Shaman of Wuruhi"},
-{"name":"Narvid Lokinal", "race":"Dwarf, Fell", 					"occupation":"Hallen Host"},
-{"name":"Edlan Geasjorm", "race":"Dwarf, Fell", 					"occupation":"Goldsmith Master"},
-{"name":"Mr. Izzard", "race":"Human", 								"occupation":"Everyman"},
-{"name":"Orwel Clease", "race":"Human", 							"occupation":"Commander"},
-{"name":"Stefan Truesteer Aethorin", "race":"Dwarf, Fell", 			"occupation":"Woodsman"},
-{"name":"Hj&aacute;lprekur Moon", "race":"Human", 					"occupation":""},
-{"name":"Sturri the Squint-Eyed", "race":"Human", 					"occupation":""},
-{"name":"Hrifla the dwarf", "race":"Human", 						"occupation":""},
-{"name":"Moli Karlpels", "race":"Asbj&oslash;rn, Brown", 			"occupation":"Sell Sword"},
-{"name":"Astvar Solpels", "race":"Asbj&oslash;rn, Black", 			"occupation":"Zealot"}]
+function getObjects(obj, key, val) {
+    var objects = [];
+    for (var i in obj) {
+        if (!obj.hasOwnProperty(i)) continue;
+        if (typeof obj[i] == 'object') {
+            objects = objects.concat(getObjects(obj[i], key, val));
+        } else if (i == key && obj[key] == val) {
+            objects.push(obj);
+        }
+    }
+    return objects;
+}
+</script>
+<script>
+characterList = [{"name":"Elimar the Black", "race":"Human","occupation":"Bounty Hunter",						"id":"eliBla","connection":[{"rid":"refCod","type":"ally"},{"rid":"valWol","type":"boss"}]},
+{"name":"Refur Cod-Biter","race":"Human","occupation":"Hirthman",												"id":"refCod","connection":[{"rid":"eliBla","type":"ally"},{"rid":"valWol","type":"boss"}]},
+{"name":"Haddi the Old","race":"Human","occupation":"Godi of Gol",												"id":"hadOld","connection":[{"rid":"eamMcm","type":"ally"}]},
+{"name":"Eamon Mcmillan","race":"Dwarf, Chalk","occupation":"Godi of Gol",										"id":"eamMcm","connection":[{"rid":"hadOld","type":"ally"}]},
+{"name":"Sirus Karlpels","race":"Asbj&oslash;rn, Brown","occupation":"Sell Sword",								"id":"sirKar","connection":[{"rid":"astSol","type":"boss"},{"rid":"molKar","type":"ally"}]},
+{"name":"Val&#254;&oacute;r Wolfjoint","race":"Human","occupation":"Jarl Warrior",								"id":"valWol","connection":[{"rid":"eliBla","type":"minion"},{"rid":"refCod","type":"minion"},{"rid":"berOxe","type":"enemy"},{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Bergj&oacute;n Oxen-Might","race":"Human","occupation":"Jarl Warrior",									"id":"berOxe","connection":[{"rid":"valWol","type":"enemy"},{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Herstein Bluetooth","race":"Human","occupation":"Jarl Warrior",										"id":"","connection":[{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Osten Njordsson the Freeman","race":"Dwarf, Fell","occupation":"King",									"id":"ostNjo","connection":[]},
+{"name":"Vigar Aethorin","race":"Dwarf, Fell","occupation":"Head Shaman of Mannik",								"id":"vigAet","connection":[{"rid":"ostNjo","type":"uboss"},{"rid":"steAet","type":"rmin"},{"rid":"narLok","type":"enemy"}]},
+{"name":"Odvin Kaldathrad","race":"Dwarf, Fell","occupation":"Head Shaman of Laurel",							"id":"odvKal","connection":[{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Brynvald Bjorinkal/Goldtooth","race":"Dwarf, Fell","occupation":"Head Shaman of Wuruhi",				"id":"bryBjo","connection":[{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Narvid Lokinal","race":"Dwarf, Fell","occupation":"Hallen Host",										"id":"narLok","connection":[{"rid":"ostNjo","type":"uboss"},{"rid":"vigAet","type":"enemy"},{"rid":"valWol","type":"ally"}]},
+{"name":"Edlan Geasjorm","race":"Dwarf, Fell","occupation":"Goldsmith Master",									"id":"","connection":[{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Mr. Izzard","race":"Human","occupation":"Everyman",													"id":"mrIzz","connection":[{"rid":"orwCle","type":"uboss"},{"rid":"refCod","type":"ally"},{"rid":"valWol","type":"ally"}]},
+{"name":"Orwel Clease","race":"Human","occupation":"Commander",													"id":"orwCle","connection":[{"rid":"mrIzz","type":"minion"}]},
+{"name":"Stefan Truesteer Aethorin","race":"Dwarf, Fell","occupation":"Woodsman",								"id":"steAet","connection":[{"rid":"vigAet","type":"rboss"}]},
+{"name":"Hj&aacute;lprekur Moon","race":"Human","occupation":"",												"id":"","connection":[]},
+{"name":"Sturri the Squint-Eyed","race":"Human","occupation":"",												"id":"","connection":[]},
+{"name":"Hrifla the dwarf","race":"Human","occupation":"",														"id":"","connection":[]},
+{"name":"Moli Karlpels","race":"Asbj&oslash;rn, Brown","occupation":"Sell Sword",								"id":"molKar","connection":[{"rid":"astSol","type":"boss"},{"rid":"sirKar","type":"ally"}]},
+{"name":"Astvar Solpels","race":"Asbj&oslash;rn, Black","occupation":"Zealot",									"id":"astSol","connection":[{"rid":"sirKar","type":"minion"},{"rid":"molKar","type":"minion"}]}];
+$.each(characterList,function(i,object){
+	object['index'] = i;
+});
 
 pC ="";
 $('div.pool').perfectScrollbar();
@@ -90,9 +145,28 @@ $.each(characterList,function(i,object){
 	pC += '</div>';
 });
 $('div.pool').html(pC);
+
 $('div.character').on( "click", function(){
 	index = $(this).attr('id');
-	pageContent = '<h2>'+characterList[index].name;+'</h2>'
+	cArray = characterList[index].connection;
+	//console.log(cArray);
+	$('div.character').attr('highlight','0');
+	$('div.character').attr('type','');
+	$(this).attr('highlight','2');
+	$.each(cArray,function(i,o){
+		
+		a = getObjects(characterList, 'id', o.rid);
+		$.each(a,function(i2,o2){
+			console.log(o.type);
+			$('div#'+o2.index).attr('highlight','1');
+			$('div#'+o2.index).attr('type',o.type);
+		});
+	});
+
+	pageContent = "";
+	pageContent += '<h2>'+characterList[index].name;+'</h2>'
+	pageContent += '<h3 class="selSub">'+characterList[index].race+' - '+characterList[index].occupation+'</h3><br>';
+
 	
 	if(pageContent ==undefined){
 		pageContent = "";
