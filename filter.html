@@ -83,6 +83,9 @@
 	h3{
 		font-weight:normal;
 	}
+	[status="dead"]{
+		text-decoration: line-through;
+	}
 	</style>
 	<link rel="stylesheet" href="perfect-scrollbar.min.css" />
 	<script src="js/jquery-2.2.0.min.js"></script>
@@ -109,28 +112,37 @@ function getObjects(obj, key, val) {
 }
 </script>
 <script>
-characterList = [{"name":"Elimar the Black", "race":"Human","occupation":"Bounty Hunter",						"id":"eliBla","connection":[{"rid":"refCod","type":"ally"},{"rid":"valWol","type":"boss"}]},
-{"name":"Refur Cod-Biter","race":"Human","occupation":"Hirthman",												"id":"refCod","connection":[{"rid":"eliBla","type":"ally"},{"rid":"valWol","type":"boss"}]},
-{"name":"Haddi the Old","race":"Human","occupation":"Godi of Gol",												"id":"hadOld","connection":[{"rid":"eamMcm","type":"ally"}]},
-{"name":"Eamon Mcmillan","race":"Dwarf, Chalk","occupation":"Godi of Gol",										"id":"eamMcm","connection":[{"rid":"hadOld","type":"ally"}]},
-{"name":"Sirus Karlpels","race":"Asbj&oslash;rn, Brown","occupation":"Sell Sword",								"id":"sirKar","connection":[{"rid":"astSol","type":"boss"},{"rid":"molKar","type":"ally"}]},
-{"name":"Val&#254;&oacute;r Wolfjoint","race":"Human","occupation":"Jarl Warrior",								"id":"valWol","connection":[{"rid":"eliBla","type":"minion"},{"rid":"refCod","type":"minion"},{"rid":"berOxe","type":"enemy"},{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Bergj&oacute;n Oxen-Might","race":"Human","occupation":"Jarl Warrior",									"id":"berOxe","connection":[{"rid":"valWol","type":"enemy"},{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Herstein Bluetooth","race":"Human","occupation":"Jarl Warrior",										"id":"","connection":[{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Osten Njordsson the Freeman","race":"Dwarf, Fell","occupation":"King",									"id":"ostNjo","connection":[]},
-{"name":"Vigar Aethorin","race":"Dwarf, Fell","occupation":"Head Shaman of Mannik",								"id":"vigAet","connection":[{"rid":"ostNjo","type":"uboss"},{"rid":"steAet","type":"rmin"},{"rid":"narLok","type":"enemy"}]},
-{"name":"Odvin Kaldathrad","race":"Dwarf, Fell","occupation":"Head Shaman of Laurel",							"id":"odvKal","connection":[{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Brynvald Bjorinkal/Goldtooth","race":"Dwarf, Fell","occupation":"Head Shaman of Wuruhi",				"id":"bryBjo","connection":[{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Narvid Lokinal","race":"Dwarf, Fell","occupation":"Hallen Host",										"id":"narLok","connection":[{"rid":"ostNjo","type":"uboss"},{"rid":"vigAet","type":"enemy"},{"rid":"valWol","type":"ally"}]},
-{"name":"Edlan Geasjorm","race":"Dwarf, Fell","occupation":"Goldsmith Master",									"id":"","connection":[{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Mr. Izzard","race":"Human","occupation":"Everyman",													"id":"mrIzz","connection":[{"rid":"orwCle","type":"uboss"},{"rid":"refCod","type":"ally"},{"rid":"valWol","type":"ally"}]},
-{"name":"Orwel Clease","race":"Human","occupation":"Commander",													"id":"orwCle","connection":[{"rid":"mrIzz","type":"minion"}]},
-{"name":"Stefan Truesteer Aethorin","race":"Dwarf, Fell","occupation":"Woodsman",								"id":"steAet","connection":[{"rid":"vigAet","type":"rboss"}]},
-{"name":"Hj&aacute;lprekur Moon","race":"Human","occupation":"",												"id":"","connection":[]},
-{"name":"Sturri the Squint-Eyed","race":"Human","occupation":"",												"id":"","connection":[]},
-{"name":"Hrifla the dwarf","race":"Human","occupation":"",														"id":"","connection":[]},
-{"name":"Moli Karlpels","race":"Asbj&oslash;rn, Brown","occupation":"Sell Sword",								"id":"molKar","connection":[{"rid":"astSol","type":"boss"},{"rid":"sirKar","type":"ally"}]},
-{"name":"Astvar Solpels","race":"Asbj&oslash;rn, Black","occupation":"Zealot",									"id":"astSol","connection":[{"rid":"sirKar","type":"minion"},{"rid":"molKar","type":"minion"}]}];
+characterList = [
+{"name":"","race":"","occupation":"","status":"alive","id":"","connection":[]},
+{"name":"Karly Redsun","race":"Human","occupation":"Scout","status":"alive","id":"kar","connection":[]},
+{"name":"Snugubbe","race":"Asbj&oslash;rn, White","occupation":"Warrior","status":"alive","id":"snu","connection":[{"rid":"fen","type":"ally"},{"rid":"dar","type":"ally"},{"rid":"tyb","type":"ally"},{"rid":"dar","type":"ally"}]},
+{"name":"Tybalt","race":"Human","occupation":"Librarian","status":"alive","id":"tyb","connection":[{"rid":"snu","type":"ally"},{"rid":"fen","type":"ally"},{"rid":"dar","type":"ally"},{"rid":"dar","type":"ally"}]},
+{"name":"Arnes Porter","race":"Human","occupation":"","status":"alive","id":"arn","connection":[]},
+{"name":"Vilberg the All-Wise","race":"Human","occupation":"","status":"dead","id":"vil","connection":[]},
+{"name":"Dari the Honourable","race":"Dwarf, Svell","occupation":"","status":"alive","id":"dar","connection":[{"rid":"fen","type":"ally"},{"rid":"tyb","type":"ally"},{"rid":"snu","type":"ally"},{"rid":"steAet","type":"ally"}]},
+{"name":"Fenton","race":"Dwarf, Chalk","occupation":"Godi of Laurel","status":"alive","id":"fen","connection":[{"rid":"snu","type":"ally"},{"rid":"tyb","type":"ally"},{"rid":"dar","type":"ally"}]},
+{"name":"Elimar the Black", "race":"Human","occupation":"Bounty Hunter","status":"alive","id":"eliBla","connection":[{"rid":"refCod","type":"ally"},{"rid":"valWol","type":"boss"}]},
+{"name":"Refur Cod-Biter","race":"Human","occupation":"Hirthman","status":"alive","id":"refCod","connection":[{"rid":"eliBla","type":"ally"},{"rid":"valWol","type":"boss"}]},
+{"name":"Haddi the Old","race":"Human","occupation":"Godi of Gol","status":"alive","id":"hadOld","connection":[{"rid":"eamMcm","type":"ally"}]},
+{"name":"Eamon Mcmillan","race":"Dwarf, Chalk","occupation":"Godi of Gol","status":"alive","id":"eamMcm","connection":[{"rid":"hadOld","type":"ally"}]},
+{"name":"Sirus Karlpels","race":"Asbj&oslash;rn, Brown","occupation":"Sell Sword","status":"alive","id":"sirKar","connection":[{"rid":"astSol","type":"boss"},{"rid":"molKar","type":"ally"}]},
+{"name":"Val&#254;&oacute;r Wolfjoint","race":"Human","occupation":"Jarl Warrior","status":"alive","id":"valWol","connection":[{"rid":"eliBla","type":"minion"},{"rid":"refCod","type":"minion"},{"rid":"berOxe","type":"enemy"},{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Bergj&oacute;n Oxen-Might","race":"Human","occupation":"Jarl Warrior","status":"alive","id":"berOxe","connection":[{"rid":"valWol","type":"enemy"},{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Herstein Bluetooth","race":"Human","occupation":"Jarl Warrior","status":"alive","id":"","connection":[{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Osten Njordsson the Freeman","race":"Dwarf, Svell","occupation":"King","status":"alive","id":"ostNjo","connection":[]},
+{"name":"Vigar Aethorin","race":"Dwarf, Svell","occupation":"Head Shaman of Mannik","status":"alive","id":"vigAet","connection":[{"rid":"ostNjo","type":"uboss"},{"rid":"steAet","type":"rmin"},{"rid":"narLok","type":"enemy"}]},
+{"name":"Odvin Kaldathrad","race":"Dwarf, Svell","occupation":"Head Shaman of Laurel","status":"alive","id":"odvKal","connection":[{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Brynvald Bjorinkal/Goldtooth","race":"Dwarf, Svell","occupation":"Head Shaman of Wuruhi","status":"alive","id":"bryBjo","connection":[{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Narvid Lokinal","race":"Dwarf, Svell","occupation":"Hallen Host","status":"alive","id":"narLok","connection":[{"rid":"ostNjo","type":"uboss"},{"rid":"vigAet","type":"enemy"},{"rid":"valWol","type":"ally"}]},
+{"name":"Edlan Geasjorm","race":"Dwarf, Svell","occupation":"Goldsmith Master","status":"alive","id":"","connection":[{"rid":"ostNjo","type":"uboss"}]},
+{"name":"Mr. Izzard","race":"Human","occupation":"Everyman","status":"alive","id":"mrIzz","connection":[{"rid":"orwCle","type":"uboss"},{"rid":"refCod","type":"ally"},{"rid":"valWol","type":"ally"}]},
+{"name":"Orwel Clease","race":"Human","occupation":"Commander","status":"alive","id":"orwCle","connection":[{"rid":"mrIzz","type":"minion"}]},
+{"name":"Stefan Truesteer Aethorin","race":"Dwarf, Svell","occupation":"Woodsman","status":"alive","id":"steAet","connection":[{"rid":"vigAet","type":"rboss"},{"rid":"dar","type":"ally"}]},
+{"name":"Hj&aacute;lprekur Moon","race":"Human","occupation":"","status":"alive","id":"","connection":[]},
+{"name":"Sturri the Squint-Eyed","race":"Human","occupation":"","status":"alive","id":"","connection":[]},
+{"name":"Hrifla the dwarf","race":"Human","occupation":"","status":"alive","id":"","connection":[]},
+{"name":"Moli Karlpels","race":"Asbj&oslash;rn, Brown","occupation":"Sell Sword","status":"alive","id":"molKar","connection":[{"rid":"astSol","type":"boss"},{"rid":"sirKar","type":"ally"}]},
+{"name":"Astvar Solpels","race":"Asbj&oslash;rn, Black","occupation":"Zealot","status":"alive","id":"astSol","connection":[{"rid":"sirKar","type":"minion"},{"rid":"molKar","type":"minion"}]}];
 $.each(characterList,function(i,object){
 	object['index'] = i;
 });
@@ -139,7 +151,7 @@ pC ="";
 $('div.pool').perfectScrollbar();
 $.each(characterList,function(i,object){
 	pC += '<div id="'+i+'"class="character">';
-	pC += '<a class="selector">'+object.name+'</a><br>';
+	pC += '<a class="selector" status="'+object.status+'">'+object.name+'</a><br>';
 	pC += '<a class="selSub">'+object.race+' - </a>';
 	pC += '<a class="selSub">'+object.occupation+'</a><br>';
 	pC += '</div>';
