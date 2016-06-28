@@ -32,6 +32,26 @@
 		border-radius: 5px;
 		box-shadow: 0px 0px 10px #EEE;
 	}
+	span.right{
+		position:absolute;
+		right:20px;
+	}
+/*	span.image{
+		position: relative;
+		display: inline-block;
+		z-index:0;
+		width:100%;
+		right:0;
+		top:0;
+	}
+	span.above{
+		position: relative;
+		display: inline-block;
+		z-index:1;
+		left:0;
+		width:100%;
+		top:0;
+	}*/
 	[highlight="0"]{
 		background:#FFF;
 		opacity:0.2;
@@ -137,7 +157,7 @@ characterList = [
 {"name":"Edlan Geasjorm","race":"Dwarf, Svell","occupation":"Goldsmith Master","status":"alive","id":"","connection":[{"rid":"ostNjo","type":"uboss"}]},
 {"name":"Mr. Izzard","race":"Human","occupation":"Everyman","status":"alive","id":"mrIzz","connection":[{"rid":"orwCle","type":"uboss"},{"rid":"refCod","type":"ally"},{"rid":"valWol","type":"ally"}]},
 {"name":"Orwel Clease","race":"Human","occupation":"Commander","status":"alive","id":"orwCle","connection":[{"rid":"mrIzz","type":"minion"}]},
-{"name":"Stefan Truesteer Aethorin","race":"Dwarf, Svell","occupation":"Woodsman","status":"alive","id":"steAet","connection":[{"rid":"vigAet","type":"rboss"},{"rid":"dar","type":"ally"}]},
+{"name":"Stefan Truesteer Aethorin","race":"Dwarf, Svell","occupation":"Woodsman","status":"alive","id":"steAet","connection":[{"rid":"vigAet","type":"family"},{"rid":"dar","type":"family"}]},
 {"name":"Hj&aacute;lprekur Moon","race":"Human","occupation":"","status":"alive","id":"","connection":[]},
 {"name":"Sturri the Squint-Eyed","race":"Human","occupation":"","status":"alive","id":"","connection":[]},
 {"name":"Hrifla the dwarf","race":"Human","occupation":"","status":"alive","id":"","connection":[]},
@@ -151,9 +171,17 @@ pC ="";
 $('div.pool').perfectScrollbar();
 $.each(characterList,function(i,object){
 	pC += '<div id="'+i+'"class="character">';
-	pC += '<a class="selector" status="'+object.status+'">'+object.name+'</a><br>';
+	pC += '<a class="selector" status="'+object.status+'">'+object.name+'</a>';
+	pC += '<span class="right">';
+	pC += '<img id="family" src="ico/shield.svg" class="ico" style="display:none;" width="20" height="20">';
+	pC += '<img id="enemy" src="ico/war.svg" class="ico" style="display:none;" width="20" height="20">';
+	pC += '<img id="uboss" src="ico/fashion.svg" class="ico" style="display:none;" width="20" height="20">';
+
+	pC += '</span><br>';
 	pC += '<a class="selSub">'+object.race+' - </a>';
-	pC += '<a class="selSub">'+object.occupation+'</a><br>';
+	pC += '<a class="selSub">'+object.occupation+'</a>';
+	// pC += '<span class="image"> <img src="http://chopperhandbook.com/images/Facebook-Icon-small.jpg" width="20" height="20"></div>';
+	// pC += '</span>';
 	pC += '</div>';
 });
 $('div.pool').html(pC);
@@ -162,6 +190,7 @@ $('div.character').on( "click", function(){
 	index = $(this).attr('id');
 	cArray = characterList[index].connection;
 	//console.log(cArray);
+	$('img.ico').hide();
 	$('div.character').attr('highlight','0');
 	$('div.character').attr('type','');
 	$(this).attr('highlight','2');
@@ -171,7 +200,8 @@ $('div.character').on( "click", function(){
 		$.each(a,function(i2,o2){
 			console.log(o.type);
 			$('div#'+o2.index).attr('highlight','1');
-			$('div#'+o2.index).attr('type',o.type);
+			// $('div#'+o2.index).attr('type',o.type);
+			$('div#'+o2.index).find('#'+o.type).show();
 		});
 	});
 
