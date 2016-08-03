@@ -1,117 +1,22 @@
 <html>
 <head>
 	<title></title>
-	<style type="text/css">
-	div.pool{
-		position:absolute;
-		width:300px;
-		top:0px;
-		bottom:0px;
-		left:0px;
-		background:#FFF;
-		overflow-y:scroll;
-	}
-	div.page{
-		position:absolute;
-		top:0px;
-		bottom:0px;
-		left:300px;
-		right:0px;
-		margin-top:5px;
-		margin-right:5px;
-		background:#FFF;
-		box-shadow: 0px 0px 10px #EEE;
-		border-radius: 5px;
-		padding:5px;
-	}
-	div.character{
-		margin-top:5px;
-		margin-left:5px;
-		margin-right:15px;
-		padding:5px;
-		border-radius: 5px;
-		box-shadow: 0px 0px 10px #EEE;
-	}
-	span.right{
-		position:absolute;
-		right:20px;
-	}
-/*	span.image{
-		position: relative;
-		display: inline-block;
-		z-index:0;
-		width:100%;
-		right:0;
-		top:0;
-	}
-	span.above{
-		position: relative;
-		display: inline-block;
-		z-index:1;
-		left:0;
-		width:100%;
-		top:0;
-	}*/
-	[highlight="0"]{
-		background:#FFF;
-		opacity:0.2;
-	}
-	[highlight="2"]{
-		background:#000;
-		color:FFF;
-	}
-	[type="ally"]{
-		color: #689f38;
-		background:#dcedc8;
-	}
-	[type="enemy"]{
-		color: #f44336;
-		background:#ffcdd2;
-	}
-	[type="boss"]{
-		color: #9c27b0;
-		background:#e1bee7;
-	}
-	[type="uboss"]{
-		color: #673ab7;
-		background:#d1c4e9;
-	}
-	[type="minion"]{
-		color: #0097a7;
-		background:#b2ebf2;
-	}
-	[type="rmin"]{
-		color:  #009688;
-		background:#b2dfdb;
-	}
-	[type="rboss"]{
-		color: #e91e63;
-		background:#f8bbd0;
-	}
-	a,h2,h3{
-		font-family:Calibri;
-	}
-	a.selector{
-		font-weight:Bold;
-	}
-	a.selSub{
-		opacity:0.75;
-	}
-	h2,h3{
-		margin-left:25px;
-	}
-	h3{
-		font-weight:normal;
-	}
-	[status="dead"]{
-		text-decoration: line-through;
-	}
-	</style>
+	<link rel="stylesheet" href="css/cl.css"/>
 	<link rel="stylesheet" href="perfect-scrollbar.min.css" />
 	<script src="js/jquery-2.2.0.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/perfect-scrollbar.jquery.min.js"></script>
 </head>
 <body>
+<div class="sort">
+<button class="sort" onclick="characterList.sort(dynamicSort('name')); rePool();" style="margin-left: 5px;">Name</button>
+<button class="sort" onclick="characterList.sort(dynamicSort('race')); rePool();">Race</button>
+<button class="sort" onclick="characterList.sort(dynamicSort('occupation')); rePool();">Occupation</button>
+<br>
+<button class="sort" onclick="hidePool();" style="margin-left: 5px;">Hide</button>
+<button class="sort" onclick="showPool();">Show</button>
+<button class="sort" onclick="clearPool();">Clear</button>
+</div>
 <div class="pool">
 </div>
 <div class="page">
@@ -131,38 +36,12 @@ function getObjects(obj, key, val) {
     return objects;
 }
 </script>
+<script src="data/cl.js"></script>
+<script src="data/sLT.js"></script>
+<script src="data/comSkills.js"></script>
 <script>
-characterList = [
-{"name":"","race":"","occupation":"","status":"alive","id":"","connection":[]},
-{"name":"Karly Redsun","race":"Human","occupation":"Scout","status":"alive","id":"kar","connection":[]},
-{"name":"Snugubbe","race":"Asbj&oslash;rn, White","occupation":"Warrior","status":"alive","id":"snu","connection":[{"rid":"fen","type":"ally"},{"rid":"dar","type":"ally"},{"rid":"tyb","type":"ally"},{"rid":"dar","type":"ally"}]},
-{"name":"Tybalt","race":"Human","occupation":"Librarian","status":"alive","id":"tyb","connection":[{"rid":"snu","type":"ally"},{"rid":"fen","type":"ally"},{"rid":"dar","type":"ally"},{"rid":"dar","type":"ally"}]},
-{"name":"Arnes Porter","race":"Human","occupation":"","status":"alive","id":"arn","connection":[]},
-{"name":"Vilberg the All-Wise","race":"Human","occupation":"","status":"dead","id":"vil","connection":[]},
-{"name":"Dari the Honourable","race":"Dwarf, Svell","occupation":"","status":"alive","id":"dar","connection":[{"rid":"fen","type":"ally"},{"rid":"tyb","type":"ally"},{"rid":"snu","type":"ally"},{"rid":"steAet","type":"ally"}]},
-{"name":"Fenton","race":"Dwarf, Chalk","occupation":"Godi of Laurel","status":"alive","id":"fen","connection":[{"rid":"snu","type":"ally"},{"rid":"tyb","type":"ally"},{"rid":"dar","type":"ally"}]},
-{"name":"Elimar the Black", "race":"Human","occupation":"Bounty Hunter","status":"alive","id":"eliBla","connection":[{"rid":"refCod","type":"ally"},{"rid":"valWol","type":"boss"}]},
-{"name":"Refur Cod-Biter","race":"Human","occupation":"Hirthman","status":"alive","id":"refCod","connection":[{"rid":"eliBla","type":"ally"},{"rid":"valWol","type":"boss"}]},
-{"name":"Haddi the Old","race":"Human","occupation":"Godi of Gol","status":"alive","id":"hadOld","connection":[{"rid":"eamMcm","type":"ally"}]},
-{"name":"Eamon Mcmillan","race":"Dwarf, Chalk","occupation":"Godi of Gol","status":"alive","id":"eamMcm","connection":[{"rid":"hadOld","type":"ally"}]},
-{"name":"Sirus Karlpels","race":"Asbj&oslash;rn, Brown","occupation":"Sell Sword","status":"alive","id":"sirKar","connection":[{"rid":"astSol","type":"boss"},{"rid":"molKar","type":"ally"}]},
-{"name":"Val&#254;&oacute;r Wolfjoint","race":"Human","occupation":"Jarl Warrior","status":"alive","id":"valWol","connection":[{"rid":"eliBla","type":"minion"},{"rid":"refCod","type":"minion"},{"rid":"berOxe","type":"enemy"},{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Bergj&oacute;n Oxen-Might","race":"Human","occupation":"Jarl Warrior","status":"alive","id":"berOxe","connection":[{"rid":"valWol","type":"enemy"},{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Herstein Bluetooth","race":"Human","occupation":"Jarl Warrior","status":"alive","id":"","connection":[{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Osten Njordsson the Freeman","race":"Dwarf, Svell","occupation":"King","status":"alive","id":"ostNjo","connection":[]},
-{"name":"Vigar Aethorin","race":"Dwarf, Svell","occupation":"Head Shaman of Mannik","status":"alive","id":"vigAet","connection":[{"rid":"ostNjo","type":"uboss"},{"rid":"steAet","type":"rmin"},{"rid":"narLok","type":"enemy"}]},
-{"name":"Odvin Kaldathrad","race":"Dwarf, Svell","occupation":"Head Shaman of Laurel","status":"alive","id":"odvKal","connection":[{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Brynvald Bjorinkal/Goldtooth","race":"Dwarf, Svell","occupation":"Head Shaman of Wuruhi","status":"alive","id":"bryBjo","connection":[{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Narvid Lokinal","race":"Dwarf, Svell","occupation":"Hallen Host","status":"alive","id":"narLok","connection":[{"rid":"ostNjo","type":"uboss"},{"rid":"vigAet","type":"enemy"},{"rid":"valWol","type":"ally"}]},
-{"name":"Edlan Geasjorm","race":"Dwarf, Svell","occupation":"Goldsmith Master","status":"alive","id":"","connection":[{"rid":"ostNjo","type":"uboss"}]},
-{"name":"Mr. Izzard","race":"Human","occupation":"Everyman","status":"alive","id":"mrIzz","connection":[{"rid":"orwCle","type":"uboss"},{"rid":"refCod","type":"ally"},{"rid":"valWol","type":"ally"}]},
-{"name":"Orwel Clease","race":"Human","occupation":"Commander","status":"alive","id":"orwCle","connection":[{"rid":"mrIzz","type":"minion"}]},
-{"name":"Stefan Truesteer Aethorin","race":"Dwarf, Svell","occupation":"Woodsman","status":"alive","id":"steAet","connection":[{"rid":"vigAet","type":"family"},{"rid":"dar","type":"family"}]},
-{"name":"Hj&aacute;lprekur Moon","race":"Human","occupation":"","status":"alive","id":"","connection":[]},
-{"name":"Sturri the Squint-Eyed","race":"Human","occupation":"","status":"alive","id":"","connection":[]},
-{"name":"Hrifla the dwarf","race":"Human","occupation":"","status":"alive","id":"","connection":[]},
-{"name":"Moli Karlpels","race":"Asbj&oslash;rn, Brown","occupation":"Sell Sword","status":"alive","id":"molKar","connection":[{"rid":"astSol","type":"boss"},{"rid":"sirKar","type":"ally"}]},
-{"name":"Astvar Solpels","race":"Asbj&oslash;rn, Black","occupation":"Zealot","status":"alive","id":"astSol","connection":[{"rid":"sirKar","type":"minion"},{"rid":"molKar","type":"minion"}]}];
+characterList.sort(dynamicSort("name"));
+console.log(characterList);
 $.each(characterList,function(i,object){
 	object['index'] = i;
 });
@@ -174,9 +53,11 @@ $.each(characterList,function(i,object){
 	pC += '<a class="selector" status="'+object.status+'">'+object.name+'</a>';
 	pC += '<span class="right">';
 	pC += '<img id="family" src="ico/shield.svg" class="ico" style="display:none;" width="20" height="20">';
+	pC += '<img id="ally" src="ico/shield-2.svg" class="ico" style="display:none;" width="20" height="20">';
 	pC += '<img id="enemy" src="ico/war.svg" class="ico" style="display:none;" width="20" height="20">';
 	pC += '<img id="uboss" src="ico/fashion.svg" class="ico" style="display:none;" width="20" height="20">';
-
+	pC += '<img id="boss" src="ico/up-chevron.svg" class="ico" style="display:none;" width="20" height="20">';
+	pC += '<img id="minion" src="ico/down-chevron.svg" class="ico" style="display:none;" width="20" height="20">';
 	pC += '</span><br>';
 	pC += '<a class="selSub">'+object.race+' - </a>';
 	pC += '<a class="selSub">'+object.occupation+'</a>';
@@ -185,6 +66,13 @@ $.each(characterList,function(i,object){
 	pC += '</div>';
 });
 $('div.pool').html(pC);
+
+// $('div.something').on( "click", function(){
+// 	console.log('CLICK');
+// 	$(this).hide();
+// $(this).nextSibling().toggle();
+// });
+
 
 $('div.character').on( "click", function(){
 	index = $(this).attr('id');
@@ -200,20 +88,363 @@ $('div.character').on( "click", function(){
 		$.each(a,function(i2,o2){
 			console.log(o.type);
 			$('div#'+o2.index).attr('highlight','1');
+			// $('div#'+o2.index).append('div.pool');
+			$('div.pool').prepend($('div#'+o2.index));
 			// $('div#'+o2.index).attr('type',o.type);
-			$('div#'+o2.index).find('#'+o.type).show();
+			$.each(o.type,function(i3,o3){
+				console.log(o3);
+				$('div#'+o2.index).find('#'+o3).show();
+		});
 		});
 	});
+	$('div.pool').prepend($(this));
+
+//CHARACTER CALCULATIONS
+//SKILLS
+$.each(characterList[index].characterSheet.skills, function(i,o){
+	if(o.rank=="1"||o.rank=="2"){
+		o.cost=o.rank;
+	}else{
+		o.cost=(parseInt(o.rank)-2)*4;
+	}
+	modifier=(sLT[o.challenge]+parseInt(o.rank));
+	// o.value=parseInt(characterList[index][sLT[o.relative]])+parseInt(modifier);
+	abName=sLT[o.relative];
+	o.value=parseInt(characterList[index].characterSheet[abName])+modifier;
+	if(modifier==0){
+		modifier="";
+		operator="";
+	}
+	if(modifier>0){
+		operator="+";
+	}
+	if(modifier<0){
+		operator="";
+	}
+	o.rel=o.relative+operator+modifier;
+	o.parry=Math.floor(parseInt(o.value)/2)+3;
+});
+//LANGUAGES
+$.each(characterList[index].characterSheet.languages, function(i,o){
+	if(i==0){
+		o.cost=parseInt(lnLT[o.spoken])+parseInt(lnLT[o.written]);
+	}else{
+		o.cost=parseInt(lLT[o.spoken])+parseInt(lLT[o.written]);
+	}
+});
+//CULTURES
+$.each(characterList[index].characterSheet.cultures, function(i,o){
+	if(i==0){
+		o.cost=0;
+	}else{
+		o.cost=1;
+	}
+});
+
 
 	pageContent = "";
-	pageContent += '<h2>'+characterList[index].name;+'</h2>'
-	pageContent += '<h3 class="selSub">'+characterList[index].race+' - '+characterList[index].occupation+'</h3><br>';
-
+	pageContent += '<h2>'+characterList[index].name;+'</h2>';
+	pageContent += '<h3 class="selSub">'+characterList[index].race+' - '+characterList[index].occupation+'</h3>';
+	pageContent += '<div class="sectionZone">';
 	
+	//COMBAT
+	pageContent += '<div class="section">';
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
+	pageContent += 'Combat';
+	pageContent += '</button></div>';
+	pageContent += '<div class="expanding">';
+	pageContent += '<div class="section">';
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
+	pageContent += 'DR & HP';
+	pageContent += '</button></div>';
+	pageContent += '<div class="expanding">';
+	pageContent += '<table>';
+	pageContent += '<tr><td>head<br>'+characterList[index].characterSheet.headDR+'</td><td>face<br>'+characterList[index].characterSheet.faceDR+'</td><td>eyes<br>'+characterList[index].characterSheet.eyeDR+'</td></tr>';
+	pageContent += '<tr><td></td><td>neck<br>'+characterList[index].characterSheet.neckDR+'</td></tr>';
+	pageContent += '<tr><td>L-Arm<br>'+characterList[index].characterSheet.lArmDR+'</td><td>Torso<br>'+characterList[index].characterSheet.torsoDR+'</td><td>R-Arm<br>'+characterList[index].characterSheet.rArmDR+'</td></tr>';
+	pageContent += '<tr><td>L-Hand<br>'+characterList[index].characterSheet.lHandDR+'</td><td></td><td>R-Hand<br>'+characterList[index].characterSheet.rHandDR+'</td></tr>';
+	pageContent += '<tr><td>L-Leg<br>'+characterList[index].characterSheet.lLegDR+'</td><td></td><td>R-Leg<br>'+characterList[index].characterSheet.rLegDR+'</td></tr>';
+	pageContent += '<tr><td>L-Foot<br>'+characterList[index].characterSheet.lFootDR+'</td><td></td><td>R-Foot<br>'+characterList[index].characterSheet.rFootDR+'</td></tr>';
+	pageContent += '</table>';
+	pageContent += '</div>';
+	
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
+	pageContent += 'Melee Weapons';
+	pageContent += '</button></div>';
+	pageContent += '<div class="expanding" style="display:none;">';
+	pageContent += '<table>';
+	pageContent += '<tr><th>Weapon</th><th>Damage</th><th>Reach</th><th>Parry</th><th>Notes</th><th>Cost</th><th>Weight 	</th>'
+		$.each(characterList[index].characterSheet.weapons, function(i,o){
+			wepLookup = o.weapon;
+			$.each(mWeapons[wepLookup], function(i,o){
+	pageContent += '<tr><td>';
+	pageContent += o.name;
+	pageContent += '</td><td>';
+	pageContent += o.damage;
+	pageContent += '</td><td>';
+	pageContent += o.reach;
+	pageContent += '</td><td>';
+	pageContent += o.parry;
+	pageContent += '</td><td>';
+	pageContent += '<a title="'+o.notes+'">'
+	if(o.notes!=""){
+		pageContent += '&dagger;';
+		}
+	pageContent += '</a>';
+	pageContent += '</td><td>';
+	pageContent += o.cost;
+	pageContent += '</td><td>';
+	pageContent += o.weight;
+	pageContent += '</td></tr>';
+		});
+			});
+	pageContent += '</table>';
+	pageContent += '</div>';
+
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
+	pageContent += 'Ranged Weapons';
+	pageContent += '</button></div>';
+	pageContent += '<div class="expanding" style="display:none;">';
+	pageContent += '<table>';
+	pageContent += '<tr><th>Weapon</th><th>Damage</th><th>Acc</th><th>Range</th><th>RoF</th><th>Shots</th><th>ST</th><th>Bulk</th><th>Rcl</th><th>LC</th><th>Notes</th>'
+		$.each(characterList[index].characterSheet.rweapons, function(i,o){
+			rwepLookup = o.weapon;
+			$.each(rWeapons[rwepLookup], function(i,o){
+	pageContent += '<tr><td>';
+	pageContent += o.name;
+	pageContent += '</td><td>';
+	pageContent += o.damage;
+	pageContent += '</td><td>';
+	pageContent += o.acc;
+	pageContent += '</td><td>';
+	pageContent += o.range;
+	pageContent += '</td><td>';
+	pageContent += o.weight;
+	pageContent += '</td><td>';
+	pageContent += o.rof;
+	pageContent += '</td><td>';
+	pageContent += o.shots;
+	pageContent += '</td><td>';
+	pageContent += o.cost;
+	pageContent += '</td><td>';
+	pageContent += o.st;
+	pageContent += '</td><td>';
+	pageContent += o.bulk;
+	pageContent += '</td><td>';
+	pageContent += '<a title="'+o.notes+'">'
+	if(o.notes!=""){
+		pageContent += '&dagger;';
+		}
+	pageContent += '</a>';
+	pageContent += '</td></tr>';
+		});
+			});
+	pageContent += '</table>';
+	pageContent += '</div>';
+
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
+	pageContent += 'Combat Skills';
+	pageContent += '</button></div>';
+	pageContent += '<div class="expanding" style="display:none;">';
+	pageContent += '<table>';
+	pageContent += '<tr><th>Name</th><th>Ch</th><th>Rel</th><th>Cost</th><th></th><th>Val</th></tr>'
+		$.each(characterList[index].characterSheet.skills, function(i,o){
+			isMelCombatSkill = undefined;
+			$.each(mcombatSkills,function(arrayI,arrayV){
+				if (arrayV==o.name){
+					isMelCombatSkill = Boolean("True");
+					console.log(isMelCombatSkill);
+				}
+			});
+			if(isMelCombatSkill){
+	pageContent += '<tr><td>';
+	pageContent += o.name;
+	pageContent += '</td><td>(';
+	pageContent += o.challenge;
+	pageContent += ')</td><td>';
+	pageContent += o.rel;
+	pageContent += '</td><td>[';
+	pageContent += o.cost;
+	pageContent += ']</td><td>-</td><td>';
+	pageContent += o.value;
+	pageContent += '</td></tr>';
+			}
+			});
+	pageContent += '</table>';
+	pageContent += '</div>';
+	pageContent += '</div></div>';
+	//
+
+	//ADV and DISADV
+	pageContent += '<div class="section">';
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
+	pageContent += 'Advantage & Disadvantages';
+	pageContent += '</button></div>';
+	pageContent += '<div class="expanding" style="display:none;">';
+	pageContent += '<div class="halfColumn">';
+		$.each(characterList[index].characterSheet.advantages, function(i,o){
+	pageContent += o.name;
+	pageContent += ' [';
+	pageContent += o.cost;
+	pageContent += ']<br>';
+			});
+		pageContent += '</div>';
+		pageContent += '<div class="halfColumn">';
+			$.each(characterList[index].characterSheet.disadvantages, function(i,o){
+	pageContent += o.name;
+	pageContent += ' [';
+	pageContent += o.cost;
+	pageContent += ']<br>';
+			});
+	pageContent += '</div>';
+	pageContent += '</div></div>';
+
+	pageContent += '<div class="section">';
+	//
+
+	//SKILLS
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
+	pageContent += 'Skills';
+	pageContent += '</button></div>';
+	pageContent += '<div class="expanding" style="display:none;">';
+	pageContent += '<table>';
+		$.each(characterList[index].characterSheet.skills, function(i,o){
+	pageContent += '<tr><td>';
+	pageContent += o.name;
+	pageContent += '</td><td>(';
+	pageContent += o.challenge;
+	pageContent += ')</td><td>';
+	pageContent += o.rel;
+	pageContent += '</td><td>[';
+	pageContent += o.cost;
+	pageContent += ']</td><td>-</td><td>';
+	pageContent += o.value;
+	pageContent += '</td></tr>';
+			});
+	pageContent += '</table>';
+	pageContent += '</div></div>';
+	//
+	
+	//ATTRIBUTES
+	pageContent += '<div class="section">';
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">Attributes</button></div>';
+	pageContent += '<div class="expanding" style="display:none;">';
+	pageContent += '<table>';
+	pageContent += '<tr><td>ST</td><td>'+characterList[index].characterSheet.stValue+'</td><td>HP</td><td>'+characterList[index].characterSheet.hpValue+'</td></tr>';
+	pageContent += '<tr><td>DX</td><td>'+characterList[index].characterSheet.dxValue+'</td><td>Per</td><td>'+characterList[index].characterSheet.perValue+'</td></tr>';
+	pageContent += '<tr><td>IQ</td><td>'+characterList[index].characterSheet.iqValue+'</td><td>Will</td><td>'+characterList[index].characterSheet.willValue+'</td></tr>';
+	pageContent += '<tr><td>HT</td><td>'+characterList[index].characterSheet.htValue+'</td><td>FP</td><td>'+characterList[index].characterSheet.fpValue+'</td></tr>';
+	pageContent += '</table>';
+	pageContent += '</div>';
+	pageContent += '</div>';
+	//
+
+	//REACTIONS
+	pageContent += '<div class="section">';
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
+	pageContent += 'Reactions';
+	pageContent += '</button></div>';
+	pageContent += '<div class="expanding" style="display:none;">';
+	pageContent += '<table>';
+	pageContent += '<tr><td>Appearance:</td><td>'+characterList[index].characterSheet.reactions.appearance+'</td></tr>';
+	pageContent += '<tr><td>Status:</td><td>'+characterList[index].characterSheet.reactions.status+'</td></tr>';
+	pageContent += '</table>';
+	pageContent += '<table>';
+	pageContent += '<tr><th>Reputation</th><th>Blah</th><th>Blah</th><th>Cost</th></tr>';
+		$.each(characterList[index].characterSheet.reactions.reputations, function(i,o){
+			pageContent += '<tr><td>';
+			pageContent += o.name;
+			pageContent += '</td><td>';
+			pageContent += o.effect;
+			pageContent += '</td><td>';
+			pageContent += o.frequency;
+			pageContent += '</td><td>';
+			pageContent += o.cost;
+			pageContent += '</td></tr>';
+		});
+	pageContent += '</table>';
+	pageContent += '</div>';
+	pageContent += '</div>';
+	//
+
+	//Languages and Cultures
+	pageContent += '<div class="section last">';
+	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
+	pageContent += 'Languages and Cultures';
+	pageContent += '</button></div>';
+	pageContent += '<div class="expanding" style="display:none;">';
+	pageContent += '<div class="halfColumn">';
+	pageContent += '<table>';
+	pageContent += '<tr><th>Languages</th><th>Spoken</th><th>Written</th><th>Cost</th></tr>';
+		$.each(characterList[index].characterSheet.languages, function(i,o){
+			pageContent += '<tr><td>';
+			pageContent += o.name;
+			pageContent += '</td><td>';
+			pageContent += o.spoken;
+			pageContent += '</td><td>';
+			pageContent += o.written;
+			pageContent += '</td><td>';
+			pageContent += o.cost;
+			pageContent += '</td></tr>';
+		});
+	pageContent += '</table>';
+	pageContent += '</div>';
+	pageContent += '<div class="halfColumn">';
+	pageContent += '<table>';
+	pageContent += '<tr><th>Cultures</th><th>Cost</th></tr>';
+		$.each(characterList[index].characterSheet.cultures, function(i,o){
+			pageContent += '<tr><td>';
+			pageContent += o.name;
+			pageContent += '</td><td>';
+			pageContent += o.cost;
+			pageContent += '</td></tr>';
+		});
+	pageContent += '</table>';
+	pageContent += '</div>';
+	pageContent += '</div>';
+	pageContent += '</div>';
+	//
+	pageContent += '</div>';
 	if(pageContent ==undefined){
 		pageContent = "";
 	}
 	$('div.page').html(pageContent);
 });
+	
+//FUNCTIONS
+//SORT ALPHABETICALLY
+function dynamicSort(property){
+var sortOrder = 1;
+if(property[0]==="-"){
+sortOrder = -1;
+property = property.substr(1);
+}
+return function(a,b){
+var result = (a[property]<b[property])?-1:(a[property]>b[property]) ? 1 :0;
+return result*sortOrder;
+}
+}
+//SORT POOL CARDS
+function rePool(){
+$.each(characterList,function(i2,o2){
+	console.log(o2.index);
+	$('div.pool').append($('div#'+o2.index));
+});
+}
+//HIDE UNHILIGHTED POOL CARDS
+function hidePool(){
+	$('[highlight="0"]').hide();
+}
+function showPool(){
+	$('[highlight="0"]').show();
+}
+function clearPool(){
+	showPool();
+	$('div.character').attr('highlight','1');
+	$('img.ico').hide();
+}
+function toggleExpand(button){
+	$(button).parent('div').next('div').toggle(100);
+}
 </script>
 </html>
