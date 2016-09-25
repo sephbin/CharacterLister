@@ -67,7 +67,100 @@ characterList = [
 		"appearance":"Standard",
 		"status":"0",
 		"reputations":[]
-	}
+	},
+	"possessions":[
+		{"name":"Stein","location":"Bag","value":"0","weight":"1"}
+	]
+	},
+"race":"Human","occupation":"Scout","status":"alive","id":"kar","connection":[]},
+// Children of Ragnarok
+{"name":"1. Adrian Taylor",
+"characterSheet":{
+	"stValue":"10",
+	"dxValue":"11",
+	"iqValue":"12",
+	"htValue":"10",
+	"hpValue":"10",
+	"willValue":"13",
+	"perValue":"12",
+	"fpValue":"10",
+	// Attribute Total [65]
+	"headDR":"2",
+	"faceDR":"0",
+	"eyeDR":"0",
+	"neckDR":"0",
+	"torsoDR":"0",
+	"lArmDR":"0",
+	"rArmDR":"0",
+	"lHandDR":"0",
+	"rHandDR":"0",
+	"lLegDR":"0",
+	"rLegDR":"0",
+	"lFootDR":"0",
+	"rFootDR":"0",
+	"advantages":[
+		{"name":"Musical Ability","cost":"5"},
+		{"name":"Voice","cost":"10"},
+		{"name":"Acute Hearing 1","cost":"2"},
+		{"name":"Absolute Direction","cost":"5"},
+		{"name":"Luck","cost":"15"}
+		// Advantage Total [37]
+		],
+	"disadvantages":[
+		{"name":"Code of Honor (Vikings's)","cost":"-10"},
+		{"name":"Duty (Kin)","cost":"-10"},
+		{"name":"Enemy","cost":"-10"},
+		{"name":"Stubbornness","cost":"-5"},
+		{"name":"Curious","cost":"-5"},
+		{"name":"Secret","cost":"-10"}
+		// Disadvantage Total [-50]
+		],
+	"skills":[
+	{"name":"Area Knowledge",					"challenge":"","relative":"","rank":"1"},
+	{"name":"Boating",							"challenge":"","relative":"","rank":"2"},
+	{"name":"Fast-Talk",						"challenge":"","relative":"","rank":"2"},
+	{"name":"Games",							"challenge":"","relative":"","rank":"0"},
+		{"name":"Instrument (Harp)",				"challenge":"","relative":"","rank":"3"},
+	{"name":"Knife",							"challenge":"","relative":"","rank":"1"},
+	{"name":"Leadership",						"challenge":"","relative":"","rank":"2"},
+	{"name":"Literature",						"challenge":"","relative":"","rank":"3"},
+	{"name":"Merchant",							"challenge":"","relative":"","rank":"2"},
+	{"name":"Navigation",						"challenge":"","relative":"","rank":"3"},
+	{"name":"Performance",						"challenge":"","relative":"","rank":"2"},
+	{"name":"Poetry",							"challenge":"","relative":"","rank":"2"},
+	{"name":"Public Speaking",					"challenge":"","relative":"","rank":"3"},
+	{"name":"Sailor",							"challenge":"","relative":"","rank":"2"},
+	{"name":"Seamanship",						"challenge":"","relative":"","rank":"2"},
+	{"name":"Shield (Buckler)",					"challenge":"","relative":"","rank":"1"},
+	{"name":"Shiphandling",						"challenge":"","relative":"","rank":"4"},
+	{"name":"Singing",							"challenge":"","relative":"","rank":"3"},
+	{"name":"Survival (Sea)",					"challenge":"","relative":"","rank":"2"},
+	{"name":"Swimming",							"challenge":"","relative":"","rank":"1"},
+	{"name":"Tactics",							"challenge":"","relative":"","rank":"3"}
+	// Skills Total [54]
+	],
+	"weapons":[
+	{"weapon":"Spear"}
+	],
+	"rweapons":[
+	{"weapon":"Longbow"}
+	],
+	"languages":[
+	{"name":"Fell","spoken":"Fluent","written":"None"}
+	],
+	"cultures":[
+	{"name":"Fell"}
+	],
+	"reactions":{
+		"appearance":"Standard",
+		"status":"0",
+		"reputations":[
+		{"name":"reputation","effect":"1"}
+		]
+	},
+	"possessions":[
+		{"name":"Stein","location":"Bag","value":"0","weight":"1"}
+	]
 	},
 "race":"Human","occupation":"Scout","status":"alive","id":"kar","connection":[]},
 //Hunting the Wolf
