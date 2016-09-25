@@ -404,38 +404,6 @@ $.each(characterList[index].characterSheet.cultures, function(i,o){
 	pageContent += '</div>';
 	pageContent += '</div>';
 	//
-	//Possessions
-	pageContent += '<div class="title"><button class="title" onclick="toggleExpand(this);">';
-	pageContent += 'Possessions';
-	pageContent += '</button></div>';
-	pageContent += '<div class="expanding" style="display:none;">';
-	pageContent += '<table>';
-	pageContent += '<tr><th>Item</th><th>Location</th><th>Value</th><th>Weight</th></tr>';
-		$.each(characterList[index].characterSheet.weapons, function(i,o){
-	wepLookup = o.weapon;
-	a=mWeapons[wepLookup][0];
-	pageContent += '<tr><td>';
-	pageContent += a.name;
-	pageContent += '</td></td><td><td>';
-	pageContent += a.cost;
-	pageContent += '</td><td>';
-	pageContent += a.weight;
-	pageContent += '</td></tr>';
-		});
-		$.each(characterList[index].characterSheet.possessions, function(i,o){
-	pageContent += '<tr><td>';
-	pageContent += o.name;
-	pageContent += '</td><td>';
-	pageContent += o.location;
-	pageContent += '</td><td>';
-	pageContent += o.value;
-	pageContent += '</td><td>';
-	pageContent += o.weight;
-	pageContent += '</td></tr>';
-			});
-	pageContent += '</table>';
-	pageContent += '</div></div>';
-	//
 
 	//NOTES
 	pageContent += '<div class="section last">';
@@ -447,7 +415,6 @@ $.each(characterList[index].characterSheet.cultures, function(i,o){
 	pageContent += '</div>';
 	pageContent += '</div>';
 	//
-
 
 	pageContent += '</div>';
 	if(pageContent ==undefined){
